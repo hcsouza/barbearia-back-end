@@ -40,6 +40,14 @@ class FakeUsersRepository implements IUsersRepository  {
     }
     return user;
   }
+
+  public async delete(user: User): Promise<void> {
+    const idx = await this.users.findIndex(toFind => toFind.id === user.id);
+    if (idx > -1){
+      this.users.splice(idx, 1);
+    }
+  }
+
 }
 
 export default FakeUsersRepository;
