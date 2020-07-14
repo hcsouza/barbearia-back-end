@@ -1,4 +1,4 @@
-import FakeMailProvider from '../providers/MailProvider/fakes/FakeMailProvider';
+import FakeMailProvider from '../../../shared/container/providers/MailProvider/fakes/FakeMailProvider';
 import FakeUserRepository from '../repositories/fakes/FakeUsersRepository';
 import FakeUserTokensRepository from '../repositories/fakes/FakeUserTokensRepository';
 import SendForgotPasswordService from './SendForgotPasswordEmailService';

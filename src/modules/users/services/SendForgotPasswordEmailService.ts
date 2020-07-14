@@ -1,7 +1,8 @@
 import AppError from '@shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
+import path from 'path';
 
-import IMailProvider from '../providers/MailProvider/models/IMailProvider';
+import IMailProvider from '../../../shared/container/providers/MailProvider/models/IMailProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IUserTokensRepository from '../repositories/IUserTokensRepository';
 
@@ -16,7 +17,7 @@ class SendForgotPasswordEmailService {
   private userTokensRepository: IUserTokensRepository;
 
   constructor(
-    @inject('UsersRepositoy')
+    @inject('UsersRepository')
     usersRepository: IUsersRepository,
 
     @inject('MailProvider')
@@ -39,7 +40,28 @@ class SendForgotPasswordEmailService {
       throw new AppError('User not found');
     }
     const userToken = await this.userTokensRepository.generate(user.id);
-    await this.mailProvider.sendMail(email, `Token: ${userToken.token}`);
+
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      '..',
+      'views',
+      'forgot_password.hbs',
+    );
+
+    await this.mailProvider.sendMail({
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: '[GoBarber] - Reset Password',
+      templateData: {
+        file: forgotPasswordTemplate,
+        variables: {
+          name: user.name,
+          link: `http://localhost:3000/reset_password?token=${userToken.token}`,
+        },
+      },
+    });
   }
 }
 
