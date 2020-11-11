@@ -1,6 +1,8 @@
+const APP_SECRET = process.env.APP_SECRET || "1q2w3e4r";
+
 export default {
   jwt: {
-    secret: 'f3b0b9d3bd05dd5b51dbf0cd59584a06',
+    secret: APP_SECRET,
     expired_in: '1d'
   },
 }

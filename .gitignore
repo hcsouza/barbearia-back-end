@@ -7,6 +7,6 @@ temp/
 coverage
 coverage/
 coverage/*
-
+.env
 tmp/*
 !tmp/.gitkeep
