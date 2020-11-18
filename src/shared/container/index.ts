@@ -18,20 +18,20 @@ import NotificationRepository from '@modules/notifications/infra/typeorm/reposit
 
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
-  AppointmentsRepository
+  AppointmentsRepository,
 );
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
-  UsersRepository
+  UsersRepository,
 );
 
 container.registerSingleton<IUserTokensRepository>(
   'UserTokensRepository',
-  UserTokensRepository
+  UserTokensRepository,
 );
 
 container.registerSingleton<INotificationRepository>(
   'NotificationsRepository',
-  NotificationRepository
+  NotificationRepository,
 );
