@@ -1,4 +1,7 @@
 import { container } from 'tsyringe';
+
+import './CacheProvider';
+
 import IStorageProvider from './StorageProvider/models/IStorageProvider';
 import DiskStorageProvider from './StorageProvider/implementations/DiskStorageProvider';
 
@@ -10,15 +13,15 @@ import HandlebarsMailTemplateProvider from '../../../shared/container/providers/
 
 container.registerSingleton<IStorageProvider>(
   'StorageProvider',
-  DiskStorageProvider
+  DiskStorageProvider,
 );
 
 container.registerSingleton<IMailTemplateProvider>(
   'MailTemplateProvider',
-  HandlebarsMailTemplateProvider
+  HandlebarsMailTemplateProvider,
 )
 
 container.registerInstance<IMailProvider>(
   'MailProvider',
-  container.resolve(EtherealMailProvider)
+  container.resolve(EtherealMailProvider),
 )

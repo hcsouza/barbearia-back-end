@@ -1,5 +1,9 @@
 docker run --name gostack_postgres -e POSTGRES_PASSWORD=docker -p 5433:5432 postgres
 
+docker run --name mongodb -p 27017:27017 -d -t mongo
+
+docker run --name redis -p 6379:6379 -d -t redis-alpine
+
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 yarn typeorm migration:run

@@ -1,19 +1,24 @@
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
+import AppError from '@shared/errors/AppError';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import FakeUserRepository from '../repositories/fakes/FakeUsersRepository';
 import CreateUserService from './CreateUserService';
-import AppError from '@shared/errors/AppError';
 
 let fakeHashProvider: FakeHashProvider;
 let fakeUserRepository: FakeUserRepository;
 let createUserService: CreateUserService;
+let fakeCacheProvider: FakeCacheProvider;
 
 describe('CreateUser', () => {
   beforeEach(() => {
     fakeHashProvider = new FakeHashProvider();
     fakeUserRepository = new FakeUserRepository();
+    fakeCacheProvider = new FakeCacheProvider();
+
     createUserService = new CreateUserService(
       fakeUserRepository,
-      fakeHashProvider
+      fakeHashProvider,
+      fakeCacheProvider,
     );
   });
 
@@ -21,7 +26,7 @@ describe('CreateUser', () => {
     const user = await createUserService.execute({
       email: 'minato@konoha.com',
       name: 'Minato',
-      password: 'hiraishin'
+      password: 'hiraishin',
     });
 
     expect(user).toHaveProperty('id');
@@ -31,14 +36,15 @@ describe('CreateUser', () => {
     await createUserService.execute({
       email: 'minato@konoha.com',
       name: 'Minato',
-      password: 'hiraishin'
+      password: 'hiraishin',
     });
 
-    await expect(createUserService.execute({
+    await expect(
+      createUserService.execute({
       email: 'minato@konoha.com',
       name: 'Minato',
-      password: 'hiraishin'
-    })).rejects.toBeInstanceOf(AppError);
-
+      password: 'hiraishin',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

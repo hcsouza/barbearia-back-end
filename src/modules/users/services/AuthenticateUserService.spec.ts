@@ -1,30 +1,33 @@
 
+import AppError from '@shared/errors/AppError';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import FakeUserRepository from '../repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import AutenticateUserService from './AuthenticateUserService';
 import CreateUserService from './CreateUserService';
-import AppError from '@shared/errors/AppError';
 
-  let fakeUserRepository: FakeUserRepository;
-  let fakeHashProvider: FakeHashProvider;
-  let authenticateUser: AutenticateUserService;
-  let createUserService: CreateUserService;
+let fakeUserRepository: FakeUserRepository;
+let fakeHashProvider: FakeHashProvider;
+let authenticateUser: AutenticateUserService;
+let createUserService: CreateUserService;
+let fakeCacheProvider: FakeCacheProvider;
 
 describe('AuthenticateUserService', () => {
-  beforeEach(()=>{
+  beforeEach(() => {
     fakeUserRepository = new FakeUserRepository();
     fakeHashProvider = new FakeHashProvider();
+    fakeCacheProvider = new FakeCacheProvider();
 
     authenticateUser = new AutenticateUserService(
       fakeUserRepository,
-      fakeHashProvider
+      fakeHashProvider,
     );
 
     createUserService = new CreateUserService(
       fakeUserRepository,
-      fakeHashProvider
+      fakeHashProvider,
+      fakeCacheProvider,
     );
-
   });
 
   it('should be able to authenticate on app', async () => {
