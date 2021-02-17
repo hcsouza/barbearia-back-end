@@ -15,8 +15,8 @@ class AppointmentRepository implements IAppointmentRepository  {
 
   public async appointmentAlreadyBooked(date: Date, provider_id: string): Promise<boolean> {
     const findAppointmentInSameDate = await this.ormRepository.findOne({
-      where: { date, provider_id }
-    })
+      where: { date, provider_id },
+    });
     return findAppointmentInSameDate !== undefined;
   }
 
@@ -31,25 +31,32 @@ class AppointmentRepository implements IAppointmentRepository  {
       where: {
         provider_id,
         date: Raw(dateFieldName =>
-          `to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`
+            `to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`,
         ),
       },
-    })
+    });
     return appointments;
   }
 
-  public async findAllInDayFromProvider({provider_id, day, month, year }: IFindAllInDayFromProvider): Promise<Appointment[]>{
+  public async findAllInDayFromProvider({
+    provider_id,
+    day,
+    month,
+    year,
+  }: IFindAllInDayFromProvider): Promise<Appointment[]> {
     const parsedDay = String(day).padStart(2, '0');
     const parsedMonth = String(month).padStart(2, '0');
 
     const appointments = await this.ormRepository.find({
       where: {
         provider_id,
-        date: Raw(dateFieldName =>
-          `to_char(${dateFieldName}, 'DD-MM-YYYY') = '${parsedDay}-${parsedMonth}-${year}'`
+        date: Raw(
+          dateFieldName =>
+            `to_char(${dateFieldName}, 'DD-MM-YYYY') = '${parsedDay}-${parsedMonth}-${year}'`,
         ),
       },
-    })
+      relations: ['user'],
+    });
     return appointments;
   }
 
