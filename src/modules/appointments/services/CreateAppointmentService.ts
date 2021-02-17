@@ -41,9 +41,10 @@ class CreateAppointmentService {
     user_id,
     date,
   }: IRequest): Promise<Appointment> {
-    const appointmentDate  = startOfHour(date);
+    const appointmentDate = startOfHour(date);
     const appointmentAlreadyBooked = await this.appointmentRepository.appointmentAlreadyBooked(
       appointmentDate,
+      provider_id
     );
 
     if (user_id === provider_id){
