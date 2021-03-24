@@ -1,13 +1,12 @@
-import { uuid } from 'uuidv4';
 import {
-        Entity,
-        Column,
-        PrimaryGeneratedColumn,
-        CreateDateColumn,
-        UpdateDateColumn,
-        ManyToOne,
-        JoinColumn}
-  from 'typeorm';
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 
